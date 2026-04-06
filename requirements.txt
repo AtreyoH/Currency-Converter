@@ -1,2 +1,5 @@
+# Web app framework
 streamlit
+
+# HTTP client for exchange rate API calls
 requests
