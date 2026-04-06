@@ -29,13 +29,44 @@ def main() -> None:
         """
         <style>
         .stApp {
-            background: linear-gradient(180deg, #1D4ED8 0%, #1E40AF 52%, #0F2C7A 100%);
+            background:
+                radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.35), transparent 35%),
+                radial-gradient(circle at 85% 8%, rgba(147, 197, 253, 0.28), transparent 30%),
+                linear-gradient(165deg, #0F2C7A 0%, #1E40AF 45%, #1D4ED8 100%);
+        }
+        .stApp::before {
+            content: "$   €   ₹   ¥   £   $   €   ₹   ¥   £";
+            position: fixed;
+            top: 22%;
+            left: -2%;
+            width: 110%;
+            text-align: center;
+            font-size: 5.8rem;
+            letter-spacing: 0.9rem;
+            color: rgba(219, 234, 254, 0.08);
+            transform: rotate(-10deg);
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+        }
+        [data-testid="stAppViewContainer"] > .main {
+            position: relative;
+            z-index: 1;
+        }
+        [data-testid="stAppViewContainer"] .block-container {
+            background: rgba(239, 246, 255, 0.14);
+            border: 1px solid rgba(191, 219, 254, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            padding: 1.3rem 1.1rem 1.8rem;
+            margin-top: 1.2rem;
+            margin-bottom: 1.2rem;
         }
         .main-card {
-            background: #EFF6FF;
-            border: 2px solid #BFDBFE;
-            border-radius: 18px;
-            padding: 22px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
             color: #0F172A;
         }
         .headline {
@@ -79,7 +110,6 @@ def main() -> None:
     currencies = sorted(rates.keys())
     usd_to_inr = convert_currency(rates, "USD", "INR", 1)
 
-    st.markdown('<div class="main-card">', unsafe_allow_html=True)
     st.markdown(f"**1 USD = {usd_to_inr} INR**")
     st.caption(f"Updated: {update_date}")
 
@@ -93,8 +123,6 @@ def main() -> None:
     if st.button("Convert", use_container_width=True, type="primary"):
         converted = convert_currency(rates, from_currency, to_currency, float(amount))
         st.markdown(f'<div class="result-box">{converted:.6f}</div>', unsafe_allow_html=True)
-
-    st.markdown("</div>", unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
